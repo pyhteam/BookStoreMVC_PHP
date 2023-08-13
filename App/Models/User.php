@@ -11,6 +11,10 @@ class User extends BaseModel
     public $FullName;
     public $Phone; 
     public $Avatar;
+    // For More
+    public $RoleName;
+    public $RoleId;
+
     // constructor
     public function __construct($user)
     {
@@ -20,6 +24,9 @@ class User extends BaseModel
         $this->FullName = $user['FullName'];
         $this->Phone = $user['Phone'];
         $this->Avatar = $user['Avatar'];
+
+        $this->RoleName = $user['RoleName'] ?? '';
+        $this->RoleId = $user['RoleId'] ?? '';
         parent::__construct($user);
         
     }

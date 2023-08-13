@@ -81,7 +81,7 @@ class UserController extends Controller
     {
         // Retrieve the user from the database by ID
         $user = $this->userService->GetById($id);
-
+        $roles = $this->roleService->GetAll();
         if (!$user) {
             // Handle user not found
             $this->redirect('/404');
@@ -100,12 +100,14 @@ class UserController extends Controller
             $this->userService->Update($userSave, $id);
             $this->userRoleService->RemoveRoleFromUser($id, $roleId);
             $this->userRoleService->AddRoleToUser($id, $roleId);
-            $this->view('User.Edit', ['user' => $user, 'title' => 'Edit User', 'message' => 'Cập nhật thành công!']);
+            $this->view('User.Edit', ['user' => (object)$userSave, 'title' => 'Edit User', 
+            'roles' => $roles,
+            'message' => 'Cập nhật thành công!']);
 
         }
 
         // Load the view for editing the user
-        $this->view('User/Edit', ['user' => $user]);
+        $this->view('User.Edit', ['user' => $user, 'title' => 'Edit User', 'roles' => $roles]);
     }
 
     public function Delete($id)

@@ -16,6 +16,7 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>FullName</th>
+                            <th>RoleName</th>
                             <th>CreatedAt</th>
                             <th>CreatedBy</th>
                             <th>UpdatedAt</th>
@@ -31,6 +32,7 @@
                                 <td><?= $user->Username; ?></td>
                                 <td><?= $user->Email; ?></td>
                                 <td><?= $user->FullName; ?></td>
+                                <td><?= $user->RoleName; ?></td>
                                 <td><?= $user->CreatedAt; ?></td>
                                 <td><?= $user->CreatedBy; ?></td>
                                 <td><?= $user->UpdatedAt; ?></td>

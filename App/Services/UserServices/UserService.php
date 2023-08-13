@@ -58,7 +58,12 @@ class UserService extends BaseService implements IUserService
 	public function GetWithPaginate($pageIndex, $pageSize)
 	{
 		$offset = ($pageIndex - 1) * $pageSize;
-		$sql = SqlCommon::Select_Condition($this->tableName, " LIMIT $pageSize OFFSET $offset");
+		$sql = "
+			SELECT Users.*, Roles.Name As RoleName,Roles.Id As RoleId FROM $this->tableName
+			LEFT JOIN UsersRoles ON Users.Id = UsersRoles.UserId
+			LEFT JOIN Roles ON UsersRoles.RoleId = Roles.Id
+			LIMIT $pageSize OFFSET $offset
+		";
 		$data = $this->context->fetch($sql);
 		// to array object User
 		$users = [];
