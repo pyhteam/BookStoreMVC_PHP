@@ -10,14 +10,24 @@ class SqlCommon {
         return $sql;
     }
 
-    public static function UPDATE($table, $data, $id) {
+    public static function UPDATE($table, $data, $id)
+    {
         $sql = "UPDATE $table SET ";
-        $sql .= implode(" = ?, ", array_keys($data)) . " = ? ";
-        $sql .= "WHERE id = $id";
+        $setStatements = array();
+
+        foreach ($data as $key => $value) {
+            $setStatements[] = "$key = '$value'";
+        }
+
+        $sql .= implode(", ", $setStatements);
+        $sql .= " WHERE Id = '$id'";
+
         return $sql;
     }
+
+
     public static function DELETE($table, $id) {
-        $sql = "DELETE FROM $table WHERE id = $id";
+        $sql = "DELETE FROM $table WHERE Id = '$id'";
         return $sql;
     }
     public static function SELECT($table) {
@@ -26,7 +36,7 @@ class SqlCommon {
     }
     public static function SELECT_CONDITION($table, $condition) {
         $sql = "SELECT * FROM $table";
-        $sql .= "$condition";
+        $sql .= " $condition";
         return $sql;
     }
 }

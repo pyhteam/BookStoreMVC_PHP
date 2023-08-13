@@ -17,9 +17,9 @@
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="/user" data-key="t-login">Users</a></li>
-                    <li><a href="/roles" data-key="t-register">Roles</a></li>
-                    <li><a href="/permissions" data-key="t-recover-password">Permission</a></li>
-                    <li><a href="/auth-two-step-verification" data-key="t-two-step-verification">Two Step Verification</a></li>
+                    <li><a href="/role" data-key="t-register">Roles</a></li>
+                    <li><a href="/permission" data-key="t-recover-password">Permission</a></li>
+                    
                 </ul>
             </li>
             <li class="menu-title mt-2" data-key="t-components">Vận Hành</li>

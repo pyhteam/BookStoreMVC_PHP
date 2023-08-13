@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                Danh Sách Tài Khoản
-                <a href="/user/create" class="btn btn-success btn-sm float-right">
+                Danh Sách Quyền
+                <a href="/role/create" class="btn btn-success btn-sm float-right">
                     <i class="fa fa-plus"></i>
                     Thêm Mới
                 </a>
@@ -13,9 +13,7 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>FullName</th>
+                            <th>Name</th>
                             <th>CreatedAt</th>
                             <th>CreatedBy</th>
                             <th>UpdatedAt</th>
@@ -25,20 +23,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user) : ?>
+                        <?php foreach ($roles as $role) : ?>
                             <tr>
-                                <td><?= $user->Id ?></td>
-                                <td><?= $user->Username; ?></td>
-                                <td><?= $user->Email; ?></td>
-                                <td><?= $user->FullName; ?></td>
-                                <td><?= $user->CreatedAt; ?></td>
-                                <td><?= $user->CreatedBy; ?></td>
-                                <td><?= $user->UpdatedAt; ?></td>
-                                <td><?= $user->UpdatedBy; ?></td>
-                                <td><?= ($user->IsActive == true) ? 'Active' : 'Inactive'; ?></td>
+                                <td><?= $role->Id ?></td>
+                                <td><?= $role->Name; ?></td>
+                                <td><?= $role->CreatedAt; ?></td>
+                                <td><?= $role->CreatedBy; ?></td>
+                                <td><?= $role->UpdatedAt; ?></td>
+                                <td><?= $role->UpdatedBy; ?></td>
+                                <td><?= ($role->IsActive == true) ? 'Active' : 'Inactive'; ?></td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="/user/edit/<?= $user->Id ?>">Edit</a>
-                                    <button onclick="remove('<?= $user->Id ?>')" type="button" class="btn btn-danger btn-sm">Delete</button>
+                                    <a class="btn btn-primary btn-sm" href="/role/edit/<?= $role->Id ?>">Edit</a>
+                                    <button onclick="remove('<?= $role->Id ?>')" type="button" class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -52,7 +48,6 @@
         <?= $pagination->createLinks(); ?>
     </div>
 </div>
-
 <script>
     function remove(id) {
         Swal.fire({
@@ -67,11 +62,11 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/user/delete/' + id,
+                    url: '/role/delete/' + id,
                     method: 'DELETE',
                     contentType: 'application/json',
                     success: function(data) {
-                        console.log(data);
+
                     },
                     error: function(err) {
                         console.log(err);

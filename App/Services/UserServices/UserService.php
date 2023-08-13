@@ -15,7 +15,7 @@ class UserService extends BaseService implements IUserService
 	 */
 	public function GetByUsername($username)
 	{
-		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Username = $username");
+		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Username = '$username'");
 		$data =  $this->context->fetch_one($sql);
 		$user = new User($data);
 		return $user;
@@ -28,7 +28,7 @@ class UserService extends BaseService implements IUserService
 	 */
 	public function GetByEmail($email)
 	{
-		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Email = $email");
+		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Email = '$email'");
 		$data =  $this->context->fetch_one($sql);
 		$user = new User($data);
 		return $user;
@@ -57,7 +57,8 @@ class UserService extends BaseService implements IUserService
 	 */
 	public function GetWithPaginate($pageIndex, $pageSize)
 	{
-		$sql = SqlCommon::Select_Condition($this->tableName, " LIMIT $pageIndex, $pageSize");
+		$offset = ($pageIndex - 1) * $pageSize;
+		$sql = SqlCommon::Select_Condition($this->tableName, " LIMIT $pageSize OFFSET $offset");
 		$data = $this->context->fetch($sql);
 		// to array object User
 		$users = [];
@@ -107,7 +108,7 @@ class UserService extends BaseService implements IUserService
 	{
 		$data['UpdatedAt'] = date('Y-m-d H:i:s');
 		$data['UpdatedBy'] = $data['UpdatedBy'] ?? 'admin';
-		$sql = SqlCommon::Update($this->tableName, $data, "Id = $id");
+		$sql = SqlCommon::Update($this->tableName, $data, $id);
 		return $this->context->query($sql);
 	}
 
@@ -118,7 +119,7 @@ class UserService extends BaseService implements IUserService
 	 */
 	public function Delete($id)
 	{
-		$sql = SqlCommon::Delete($this->tableName, "Id = $id");
+		$sql = SqlCommon::Delete($this->tableName, $id);
 		return  $this->context->query($sql);
 	}
 }

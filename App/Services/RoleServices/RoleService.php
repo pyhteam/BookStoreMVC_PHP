@@ -48,7 +48,6 @@ class RoleService extends BaseService implements IRoleService
             array_push($roles, $role);
         }
         return $roles;
-
 	}
 	
 	/**
@@ -58,7 +57,7 @@ class RoleService extends BaseService implements IRoleService
 	 */
 	public function GetById($id) 
     {
-        $sql = SqlCommon::Select_Condition($this->tableName, "WHERE Id = $id");
+        $sql = SqlCommon::Select_Condition($this->tableName, "WHERE Id = '$id'");
         $data = $this->context->fetch_one($sql);
         $role = new Role($data);
         return $role;
@@ -89,7 +88,7 @@ class RoleService extends BaseService implements IRoleService
     {
         $data['UpdatedAt'] = date('Y-m-d H:i:s');
         $data['UpdatedBy'] = $data['UpdatedBy'] ?? 'admin';
-        $sql = SqlCommon::Update($this->tableName, $data, "WHERE Id = $id");
+        $sql = SqlCommon::Update($this->tableName, $data, $id);
         return $this->context->query($sql);
 	}
 	
@@ -99,7 +98,7 @@ class RoleService extends BaseService implements IRoleService
 	 * @return mixed
 	 */
 	public function Delete($id) {
-        $sql = SqlCommon::Delete($this->tableName, "Id = $id");
+        $sql = SqlCommon::Delete($this->tableName, $id);
         return  $this->context->query($sql);
 	}
 }

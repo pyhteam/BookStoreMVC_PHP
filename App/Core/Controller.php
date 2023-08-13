@@ -18,5 +18,11 @@ class Controller
     {
         header('Content-Type: application/json');
         echo json_encode($data);
+        require_once "../App/Views/Shared/json.php";
+    }
+    // redirect to a different page
+    protected function redirect($url)
+    {
+        header('Location: ' . $url);
     }
 }

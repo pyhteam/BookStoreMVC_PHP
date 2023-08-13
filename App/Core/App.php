@@ -6,11 +6,14 @@ class App
 {
     protected $router;
     protected $errorMiddleware;
+    protected $timezone;
 
     public function __construct(Router $router, ErrorMiddleware $errorMiddleware)
     {
         $this->router = $router;
         $this->errorMiddleware = $errorMiddleware;
+        $this->timezone = new Config();
+        date_default_timezone_set($this->timezone->get('timezone'));
     }
 
     public function run()

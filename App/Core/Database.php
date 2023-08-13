@@ -18,12 +18,14 @@ class Database
         $dbHost = $config->get('db_host');
         $dbUser = $config->get('db_user');
         $dbPassword = $config->get('db_password');
+        $timezone = $config->get('timezone');
 
         try {
             $this->connection = new PDO(
                 'mysql:host=' . $dbHost . ';dbname=' . $dbName . ';charset=utf8',
                 $dbUser,
-                $dbPassword
+                $dbPassword, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '+07:00'")
+
             );
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {

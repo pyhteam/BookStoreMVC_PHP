@@ -21,6 +21,7 @@ class Config
             'db_name' => 'bookstore_mvc',
             'db_user' => 'root',
             'db_password' => '',
+            'timezone' => 'Asia/Ho_Chi_Minh',
         ];
     }
     public static function PageConfig()

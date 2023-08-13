@@ -11,7 +11,8 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
-
+    <!-- Sweet Alert-->
+    <link href="/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <!-- plugin css -->
     <link href="/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 
@@ -111,6 +112,7 @@
     <script src="/assets/libs/feather-icons/feather.min.js"></script>
     <!-- pace js -->
     <script src="/assets/libs/pace-js/pace.min.js"></script>
+    <script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="/assets/js/app.js"></script>
 
 </body>
