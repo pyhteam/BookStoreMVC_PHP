@@ -98,10 +98,10 @@ class RoleController extends Controller
             $result = $this->roleService->Delete($id);
             if (!$result) {
                 
-                echo Response::badRequest([], 'Xóa thất bại!', 400);
+                Response::badRequest([], 'Xóa thất bại!', 400);
                 return;
             }
-            echo Response::success([], 'Xóa thành công!', 200);
+             Response::success([], 'Xóa thành công!', 200);
         }
     }
 }

@@ -14,7 +14,7 @@ class UserRoleService implements IUserRoleService
 	 */
 	public function GetRoleByUsername($username) 
     {
-        $sql = "SELECT Roles.Name FROM  UsersRoles 
+        $sql = "SELECT Roles.Name,Roles.Id FROM  UsersRoles 
         JOIN Roles ON  UsersRoles.RoleId = Roles.Id 
         JOIN Users ON  UsersRoles.UserId = Users.Id
         WHERE Users.Username = '$username'";

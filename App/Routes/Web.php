@@ -3,7 +3,17 @@
 use App\Core\Router;
 
 $router = new Router();
+
+// Authen
+$router->get('/auth/login', 'AuthenController@Login');
+$router->post('/auth/login', 'AuthenController@Login');
+$router->get('/auth/register', 'AuthenController@Register');
+$router->get('/auth/logout', 'AuthenController@Logout');
+
+
+// User
 $router->get('/', 'DashboardController@Index');
+$router->get('/dashboard', 'DashboardController@Index');
 $router->get('/user', 'UserController@Index');
 $router->get('/user/page/{page}', 'UserController@Index');
 

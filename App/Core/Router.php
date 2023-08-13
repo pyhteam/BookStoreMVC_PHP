@@ -48,7 +48,6 @@ class Router
     
                     // Call the controller action with the extracted route parameters
                     call_user_func_array([new $controller, $method], $matches);
-                    return;
                 }
             }
         }else {

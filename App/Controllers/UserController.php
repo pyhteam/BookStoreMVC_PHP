@@ -121,7 +121,7 @@ class UserController extends Controller
             $result = $this->userService->Delete($id);
             if (!$result) {
 
-                echo Response::badRequest([], 'Xóa thất bại!', 400);
+                 Response::badRequest([], 'Xóa thất bại!', 400);
                 return;
             }
             // remove role from user
@@ -129,7 +129,7 @@ class UserController extends Controller
             foreach ($roles as $role) {
                 $this->userRoleService->RemoveRoleFromUser($id, $role['Id']);
             }
-            echo Response::success([], 'Xóa thành công!', 200);
+             Response::success([], 'Xóa thành công!', 200);
         }
     }
 }

@@ -65,15 +65,12 @@
                     url: '/role/delete/' + id,
                     method: 'DELETE',
                     contentType: 'application/json',
-                    success: function(data) {
-
-                    },
-                    error: function(err) {
-                        console.log(err);
-                        if (err.status == 200) {
+                    success: function(res) {
+                        console.log(res);
+                        if (res.success == true) {
                             Swal.fire(
                                 'Đã xóa!',
-                                'Dữ liệu đã được xóa.',
+                                res.message,
                                 'success'
                             )
                             setTimeout(function() {
@@ -81,6 +78,14 @@
                             }, 1000);
                             return;
                         }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong!',
+                            'error'
+                        )
                     }
                 });
             }

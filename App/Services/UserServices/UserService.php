@@ -4,6 +4,7 @@ namespace App\Services\UserServices;
 
 use App\Models\User;
 use App\Services\BaseService;
+use App\Services\Common\Helper;
 use App\Services\Common\SqlCommon;
 
 class UserService extends BaseService implements IUserService
@@ -126,5 +127,40 @@ class UserService extends BaseService implements IUserService
 	{
 		$sql = SqlCommon::Delete($this->tableName, $id);
 		return  $this->context->query($sql);
+	}
+	/**
+	 * @param mixed $email
+	 * @param mixed $password
+	 * @return mixed
+	 */
+	public function Login($email, $password) {
+		// check contain @
+		$password = Helper::HashSha128($password);
+		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Username = '$email' AND Password = '$password'");
+		if (strpos($email, '@') !== false) {
+			$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Email = '$email' AND Password = '$password'");
+		}
+		$data =  $this->context->fetch_one($sql);
+		if ($data) {
+			$user = new User($data);
+			return $user;
+		}
+		return null;
+	}
+	
+	/**
+	 *
+	 * @param mixed $user
+	 * @return mixed
+	 */
+	public function Register($user) {
+		// check contain @
+		$user['Password'] = Helper::HashSha128($user['Password']);
+		
+		$user['CreatedAt'] = date('Y-m-d H:i:s');
+		$user['CreatedBy'] = $user['CreatedBy'] ?? 'admin';
+		$user['IsActive'] = $user['IsActive'] ?? 1;
+		$sql = SqlCommon::Insert($this->tableName, $user);
+		return $this->context->query($sql);
 	}
 }

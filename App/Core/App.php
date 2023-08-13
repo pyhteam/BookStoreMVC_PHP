@@ -19,9 +19,7 @@ class App
     public function run()
     {
         $this->router->loadRoutes();
-        $this->router->run();
         $this->errorMiddleware->handle();
-
         $error = $this->errorMiddleware->getError();
         if ($error)
             $this->handleError($error);
