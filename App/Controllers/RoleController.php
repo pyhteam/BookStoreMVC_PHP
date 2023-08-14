@@ -80,7 +80,7 @@ class RoleController extends Controller
             ];
 
             $this->roleService->Update($role, $id);
-            $this->view('Role.Edit', ['role' => (object)$role, 'title' => 'Sửa quyền', 'message' => 'Cập nhật thành công!']);
+            $this->redirect('/role');
         }
 
         // Load the view for editing the user

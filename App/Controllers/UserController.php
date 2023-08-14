@@ -72,7 +72,7 @@ class UserController extends Controller
             $user = $this->userService->GetByUsername($user['Username']);
             $roleId = $_POST['RoleId'];
             $this->userRoleService->AddRoleToUser($user->Id, $roleId);
-            $this->view('User.Create', ['title' => 'Create User', 'message' => 'Tạo mới thành công', 'roles' => (object)$roles]);
+            $this->redirect('/user');
         }
         $this->view('User.Create', ['title' => 'Create User', 'roles' => $roles]);
     }
