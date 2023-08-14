@@ -39,4 +39,9 @@ class SqlCommon {
         $sql .= " $condition";
         return $sql;
     }
+    // limit
+    public static function SELECT_LIMIT($table, $offset, $pageSize) {
+        $sql = "SELECT * FROM $table LIMIT $offset, $pageSize";
+        return $sql;
+    }
 }

@@ -1,48 +1,51 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Core\Config;
 use App\Core\Controller;
+use App\Services\BookCategoryServices\BookCategoryService;
+use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Response;
-use App\Services\RoleServices\RoleService;
 
-class RoleController extends Controller
+class BookCategoryController extends Controller
 {
-    private $roleService = null;
+
+    private  $bookCategoryService;
     public function __construct()
     {
-        $this->roleService = new RoleService();
+        $this->bookCategoryService = new  BookCategoryService();
     }
+
     public function Index($page = null)
     {
         $pageConfig = Config::PageConfig();
         $pageIndex = $page ?? 1;
-        $totalRecords   = count($this->roleService->GetAll());
+        $totalRecords   = count($this->bookCategoryService->GetAll());
         $pagConfig = [
             'baseURL' => '/user/page',
             'totalRows' => $totalRecords,
             'perPage' => $pageConfig['PageSize'],
         ];
         $pagination = new Pagination($pagConfig);
-
-        $roles = $this->roleService->GetWithPaginate($pageIndex, $pageConfig['PageSize']);
+        $bookCategories = $this->bookCategoryService->GetWithPaginate($pageIndex, $pageConfig['PageSize']);
         // Load the view and pass data
-        $this->view('Role.Index', [
-            'roles' => $roles,
+        $this->view('BookCategory.Index', [
+            'bookCategories' => $bookCategories,
             'pagination' => $pagination,
-            'title' => 'Danh sách quyền'
+            'title' => 'Danh sách Danh mục sách'
         ]);
     }
     public function Detail($id, $slug)
     {
         // Retrieve all users from the database
-        $user = $this->roleService->GetById($id);
+        $bookCategory = $this->bookCategoryService->GetById($id);
         // Load the view and pass data
-        $this->view('User.Detail', [
+        $this->view('BookCategory.Detail', [
             'id' => $id,
-            'user' => $user,
-            'slug' => $slug,
-            'title' => 'User Detail'
+            'user' => $bookCategory,
+            'title' => 'Book Category Detail'
         ]);
     }
 
@@ -51,23 +54,24 @@ class RoleController extends Controller
         // Handle form submission to create a new user
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $role = [
+            $bookCategory = [
                 'Name' => $_POST['Name'],
+                'Slug' => Helper::Slugify($_POST['Name'])
             ];
-            $this->roleService->Add($role);
-            $this->redirect('/role');
+            $this->bookCategoryService->Add($bookCategory);
+            $this->redirect('/book-category');
         }
 
         // Load the view for creating a new user
-        $this->view('Role.Create', ['title' => 'Tạo mới quyền']);
+        $this->view('BookCategory.Create', ['title' => 'Tạo mới Danh mục sách']);
     }
 
     public function Edit($id)
     {
         // Retrieve the user from the database by ID
-        $role = $this->roleService->GetById($id);
+        $bookCategory = $this->bookCategoryService->GetById($id);
 
-        if (!$role) {
+        if (!$bookCategory) {
             // Handle user not found
             $this->redirect('/404');
             return;
@@ -75,33 +79,34 @@ class RoleController extends Controller
 
         // Handle form submission to update the user
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $role = [
+            $bookCategorySave = [
                 'Name' => $_POST['Name'],
+                'Slug' => Helper::Slugify($_POST['Name'])
             ];
 
-            $this->roleService->Update($role, $id);
-            $this->view('Role.Edit', ['role' => (object)$role, 'title' => 'Sửa quyền', 'message' => 'Cập nhật thành công!']);
+            $this->bookCategoryService->Update($bookCategorySave, $id);
+            $this->redirect('/book-category');
         }
 
         // Load the view for editing the user
-        $this->view('Role.Edit', ['role' => $role, 'title' => 'Sửa quyền']);
+        $this->view('BookCategory.Edit', ['bookCategory' => $bookCategory, 'title' => 'Sửa quyền']);
     }
 
     public function Delete($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-            $role = $this->roleService->GetById($id);
-            if (!$role) {
+            $bookCategory = $this->bookCategoryService->GetById($id);
+            if (!$bookCategory) {
                 $this->redirect('/404');
                 return;
             }
-            $result = $this->roleService->Delete($id);
+            $result = $this->bookCategoryService->Delete($id);
             if (!$result) {
-                
+
                 Response::badRequest([], 'Xóa thất bại!', 400);
                 return;
             }
-             Response::success([], 'Xóa thành công!', 200);
+            Response::success([], 'Xóa thành công!', 200);
         }
     }
 }

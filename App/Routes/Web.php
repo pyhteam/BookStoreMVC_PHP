@@ -39,5 +39,17 @@ $router->post('/role/edit/{id}', 'RoleController@Edit');
 $router->delete('/role/delete/{id}', 'RoleController@Delete');
 
 
+// Book Category
+$router->get('/book-category', 'BookCategoryController@Index');
+$router->get('/book-category/page/{page}', 'BookCategoryController@Index');
+
+$router->get('/book-category/create', 'BookCategoryController@Create');
+$router->post('/book-category/create', 'BookCategoryController@Create');
+
+$router->get('/book-category/edit/{id}', 'BookCategoryController@Edit');
+$router->post('/book-category/edit/{id}', 'BookCategoryController@Edit');
+
+$router->delete('/book-category/delete/{id}', 'BookCategoryController@Delete');
+
 
 $router->run();

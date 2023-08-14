@@ -107,41 +107,56 @@ CREATE TABLE `usersroles` (
   `RoleId` char(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `permissions`
---
+CREATE TABLE `bookcategory` (
+  `Id` char(36) NOT NULL DEFAULT 'UUID()',
+  `Name` varchar(250) NOT NULL,
+  `Slug` varchar(250) NOT NULL,
+  
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT NULL,
+  `CreatedBy` varchar(250) NOT NULL DEFAULT 'System',
+  `UpdatedBy` varchar(250) DEFAULT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `book` (
+  `Id` char(36) NOT NULL DEFAULT 'UUID()',
+
+  `Title` varchar(250) NOT NULL,
+  `Author` varchar(250) NOT NULL,
+  `CategoryId` varchar(36) NOT NULL,
+  `Price`  INT(11) DEFAULT 0,
+  `Quantity` INT(11) DEFAULT 0,
+  `Description` varchar(1000) DEFAULT NULL,
+  `Image` varchar(250) DEFAULT NULL,
+  `Slug` varchar(250) DEFAULT NULL,
+
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT NULL,
+  `CreatedBy` varchar(250) NOT NULL DEFAULT 'System',
+  `UpdatedBy` varchar(250) DEFAULT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `book`
+  ADD PRIMARY KEY (`Id`);
+  
+ALTER TABLE `bookcategory`
+  ADD PRIMARY KEY (`Id`);
+  
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`Id`);
 
---
--- Indexes for table `roles`
---
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`Id`);
 
---
--- Indexes for table `rolespermissions`
---
 ALTER TABLE `rolespermissions`
   ADD PRIMARY KEY (`Id`);
 
---
--- Indexes for table `users`
---
 ALTER TABLE `users`
   ADD PRIMARY KEY (`Id`);
 
---
--- Indexes for table `usersroles`
---
 ALTER TABLE `usersroles`
   ADD PRIMARY KEY (`Id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
