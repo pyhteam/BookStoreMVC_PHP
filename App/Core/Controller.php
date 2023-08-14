@@ -11,6 +11,8 @@ class Controller
         $viewName = str_replace('.', '/', $viewName);
         // Extract data for use in the view
         extract($data);
+        //$userLogin = $_SESSION['user'] ?? null;
+        //extract($userLogin);
         // Load the view file
         include "../App/Views/Shared/$layoutName.php";
     }

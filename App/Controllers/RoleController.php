@@ -6,12 +6,14 @@ use App\Services\Common\Pagination;
 use App\Services\Common\Response;
 use App\Services\RoleServices\RoleService;
 
-class RoleController extends Controller
+class RoleController extends AdminController
 {
     private $roleService = null;
     public function __construct()
     {
         $this->roleService = new RoleService();
+        // base controller
+        parent::__construct();
     }
     public function Index($page = null)
     {

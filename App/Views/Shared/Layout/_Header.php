@@ -1,3 +1,7 @@
+<?php
+
+use App\Services\Common\Session;
+?>
 <div class="navbar-header">
     <div class="d-flex">
         <!-- LOGO -->
@@ -174,7 +178,7 @@
             <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-1.jpg" alt="Header Avatar">
                 <span class="d-none d-xl-inline-block ms-1 fw-medium">
-
+                    <?= Session::get('user')->Username ?>
                 </span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
@@ -189,35 +193,3 @@
 
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // get user info
-        let token = localStorage.getItem('token');
-        if (!token) {
-            //clear local storage
-            localStorage.clear();
-        } else {
-
-            // parse JWT token
-            let payload = parseJwt(token);
-            // get user info
-            let userId = payload.userId;
-            let username = payload.username;
-            let email = payload.email;
-            let roleId = payload.roleId;
-            // set user info
-            $('#header-username').text(username);
-            $('#header-email').text(email);
-            // get role info
-        }
-    })
-
-
-    function parseJwt(token) {
-        try {
-            return JSON.parse(atob(token.split('.')[1]));
-        } catch (e) {
-            return null;
-        }
-    }
-</script>

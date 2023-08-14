@@ -42,11 +42,9 @@ class AuthenController extends Controller
             // get role
             $userRole = $this->userRoleService->GetRoleByUsername($result->Username);
             $roleId = $userRole[0]['Id'];
+            $roleName =  $userRole[0]['Name'];
             // set session
-            Session::set('userId', $result->Id);
-            Session::set('username', $result->Username);
-            Session::set('email', $result->Email);
-            Session::set('roleId', $roleId);
+            Session::set('user', $result);
             $token = JWTToken::generateToken([
                 'userId' => $result->Id,
                 'username' => $result->Username,
@@ -54,6 +52,7 @@ class AuthenController extends Controller
                 'roleId' => $roleId
             ], time() + 3600);
             Session::set('token', $token);
+            Session::set('role', $roleName);
             // set time out session
             Session::set('timeout', time() + 3600);
 

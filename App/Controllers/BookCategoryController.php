@@ -9,13 +9,15 @@ use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Response;
 
-class BookCategoryController extends Controller
+class BookCategoryController extends AdminController
 {
 
     private  $bookCategoryService;
     public function __construct()
     {
         $this->bookCategoryService = new  BookCategoryService();
+        // base controller
+        parent::__construct();
     }
 
     public function Index($page = null)

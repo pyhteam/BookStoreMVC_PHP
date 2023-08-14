@@ -11,8 +11,9 @@ use App\Services\RoleServices\RoleService;
 use App\Services\UserRoleServices\UserRoleService;
 use App\Services\UserServices\UserService;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
+    
     private $userService = null;
     private $userRoleService = null;
     private $roleService = null;
@@ -21,6 +22,8 @@ class UserController extends Controller
         $this->userService = new UserService();
         $this->userRoleService = new UserRoleService();
         $this->roleService = new RoleService();
+        // base controller
+        parent::__construct();
     }
     public function Index($page = null)
     {

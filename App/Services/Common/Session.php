@@ -6,6 +6,24 @@ class Session
     {
         session_start();
     }
+    // Authozize
+    public static function Authorize($role = "Admin")
+    {
+        $user = self::get('user');
+        $timeout = self::get('timeout');
+        if ($user == null || $timeout == null) {
+            return false;
+        }
+        if (time() > $timeout) {
+            self::destroy();
+            return false;
+        }
+        $roleName = self::get('role');
+        if ($roleName!= $role) {
+            return false;
+        }
+        return true;
+    }
 
     public static function set($key, $value)
     {

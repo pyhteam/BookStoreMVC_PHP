@@ -7,13 +7,15 @@ use App\Services\Common\Request;
 use App\Services\Common\Response;
 use App\Services\OrderDetailServices\OrderDetailService;
 use App\Services\OrderServices\OrderService;
-class OrderController extends Controller {
+class OrderController extends AdminController {
     private  $orderService;
     private $orderDetailService;
     public function __construct()
     {
         $this->orderService = new  OrderService();
         $this ->orderDetailService = new OrderDetailService();
+        // base controller
+        parent::__construct();
     }
 
     public function Index($page = null)
