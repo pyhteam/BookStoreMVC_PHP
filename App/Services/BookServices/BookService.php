@@ -49,7 +49,12 @@ class BookService extends BaseService implements IBookService {
 	 */
 	public function GetWithPaginate($pageIndex, $pageSize) {
         $offset = ($pageIndex - 1) * $pageSize;
-        $sql = SqlCommon::SELECT_LIMIT($this->tableName, $offset, $pageSize);
+        $sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
+			ORDER BY CreatedAt DESC
+			LIMIT $offset, $pageSize
+		";
         $data = $this->context->fetch($sql);
         $books = [];
         foreach ($data as $item) {

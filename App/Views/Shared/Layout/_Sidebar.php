@@ -26,13 +26,20 @@
             <li>
                 <a href="/book-category">
                     <i data-feather="book"></i>
-                    <span data-key="t-dashboard">Danh Mục Sách</span>
+                    <span data-key="t-book-category">Danh Mục Sách</span>
                 </a>
             </li>
             <li>
                 <a href="/book">
                     <i data-feather="book"></i>
-                    <span data-key="t-dashboard">Sách</span>
+                    <span data-key="t-book">Sách</span>
+                </a>
+            </li>
+            <!-- order -->
+            <li>
+                <a href="/order">
+                    <i data-feather="shopping-bag"></i>
+                    <span data-key="t-order">Order</span>
                 </a>
             </li>
         </ul>

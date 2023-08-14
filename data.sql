@@ -139,6 +139,44 @@ CREATE TABLE `book` (
   `IsActive` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `orders` (
+  `Id` char(36) NOT NULL DEFAULT 'UUID()',
+
+  `UserId` char(36) NOT NULL,
+  `TotalPrice` INT(11) DEFAULT 0,
+  `Status` varchar(100) NOT NULL,
+  `ShipName`  varchar(250) NOT NULL,
+  `ShipPhone` varchar(250) NOT NULL,
+  `ShipAddress` varchar(250) NOT NULL,
+
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT NULL,
+  `CreatedBy` varchar(250) NOT NULL DEFAULT 'System',
+  `UpdatedBy` varchar(250) DEFAULT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `orderdetails` (
+  `Id` char(36) NOT NULL DEFAULT 'UUID()',
+
+  `OrderId` char(36) NOT NULL,
+  `BookId` char(36) DEFAULT 0,
+  `Quantity` INT(11) DEFAULT 0,
+  
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `UpdatedAt` datetime DEFAULT NULL,
+  `CreatedBy` varchar(250) NOT NULL DEFAULT 'System',
+  `UpdatedBy` varchar(250) DEFAULT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`Id`);
+
+ALTER TABLE `orderdetails`
+  ADD PRIMARY KEY (`Id`);
+
+
 ALTER TABLE `book`
   ADD PRIMARY KEY (`Id`);
   

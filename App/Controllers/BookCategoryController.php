@@ -24,7 +24,7 @@ class BookCategoryController extends Controller
         $pageIndex = $page ?? 1;
         $totalRecords   = count($this->bookCategoryService->GetAll());
         $pagConfig = [
-            'baseURL' => '/user/page',
+            'baseURL' => '/book-category/page',
             'totalRows' => $totalRecords,
             'perPage' => $pageConfig['PageSize'],
         ];

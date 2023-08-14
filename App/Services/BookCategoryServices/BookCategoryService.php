@@ -34,7 +34,7 @@ class BookCategoryService extends BaseService implements IBookCategoryService
         public function GetWithPaginate($pageIndex, $pageSize)
         {
                 $offset = ($pageIndex - 1) * $pageSize;
-                $sql = SqlCommon::SELECT_CONDITION($this->tableName, $offset, $pageSize);
+                $sql = SqlCommon::SELECT_LIMIT($this->tableName, $offset, $pageSize);
                 $data = $this->context->fetch($sql);
                 $bookCategories = [];
                 foreach ($data as $item) {
