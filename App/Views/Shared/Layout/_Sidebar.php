@@ -29,6 +29,12 @@
                     <span data-key="t-dashboard">Danh Mục Sách</span>
                 </a>
             </li>
+            <li>
+                <a href="/book">
+                    <i data-feather="book"></i>
+                    <span data-key="t-dashboard">Sách</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- Sidebar -->

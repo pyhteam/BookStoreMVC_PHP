@@ -9,7 +9,7 @@
                         <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter name" required>
                     </div>
                     <div class="form-group mt-2">
-                        <a href="/category-book" class="btn btn-primary">Back</a>
+                        <a href="/book-category" class="btn btn-primary">Back</a>
                         <button type="submit" class="btn btn-success">Save</button>
                     </div>
                 </form>

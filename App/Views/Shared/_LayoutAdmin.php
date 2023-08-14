@@ -25,6 +25,10 @@
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- jquery -->
+    <script src="/assets/libs/jquery/jquery.min.js"></script>
+    <!-- cdk edit 5 -->
+    <script src="/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
 </head>
 
 <body>
@@ -104,7 +108,6 @@
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
     <!-- JAVASCRIPT -->
-    <script src="/assets/libs/jquery/jquery.min.js"></script>
     <script src="https://themesbrand.com/minia/layouts/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="/assets/libs/simplebar/simplebar.min.js"></script>
@@ -113,6 +116,7 @@
     <!-- pace js -->
     <script src="/assets/libs/pace-js/pace.min.js"></script>
     <script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
     <script src="/assets/js/app.js"></script>
 
 </body>

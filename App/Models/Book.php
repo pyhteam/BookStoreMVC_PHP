@@ -1,6 +1,9 @@
-<?php 
+<?php
+
 namespace App\Models;
+
 use App\Models\Base\BaseModel;
+
 class Book extends BaseModel
 {
     // Properties
@@ -8,6 +11,7 @@ class Book extends BaseModel
     public $Slug;
     public $Author;
     public $CategoryId;
+    public $CategoryName; // This property is not in the database
     public $Price;
     public $Quantity;
     public $Description;
@@ -22,6 +26,7 @@ class Book extends BaseModel
         $this->Quantity = $data['Quantity'];
         $this->Description = $data['Description'];
         $this->Image = $data['Image'];
+        $this->CategoryName = $data['CategoryName'] ?? '';
         parent::__construct($data);
     }
 }
