@@ -88,11 +88,54 @@ class AuthenController extends Controller
             Response::success([], 'Đăng ký thành công');
             return;
         }
-        $this->render('Authen.Register', '_AuthenLayout', ['title' => 'Register']);
+        $this->render('Authen.Register', '_ClientLayout', ['title' => 'Register']);
     }
     public function Logout()
     {
         Session::destroy();
         $this->redirect('/auth/login');
+    }
+
+    // For Client Site
+    public function UserLogin()
+    {
+        if (Request::method("POST")) {
+            $post = $_POST;
+            $username = Request::post('Username');
+            $password = Request::post('Password');
+            if ($username == null || $password == null) {
+                Response::badRequest([], 'Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+
+            $result = $this->userService->Login($username, $password);
+            if ($result == null) {
+                Response::notFound([], 'Tài khoản không tồn tại');
+                return;
+            }
+            // get role
+            $userRole = $this->userRoleService->GetRoleByUsername($result->Username);
+            $roleId = $userRole[0]['Id'];
+            $roleName =  $userRole[0]['Name'];
+            // set session
+            Session::set('user', $result);
+            $token = JWTToken::generateToken([
+                'userId' => $result->Id,
+                'username' => $result->Username,
+                'email' => $result->Email,
+                'roleId' => $roleId
+            ], time() + 3600);
+            Session::set('token', $token);
+            Session::set('role', $roleName);
+            // set time out session
+            Session::set('timeout', time() + 3600);
+
+            Response::success([
+                'userId' => $result->Id,
+                'token' => $token,
+            ], 'Đăng nhập thành công');
+            return;
+        }
+        $this->render('Authen.UserLogin', '_ClientLayout', ['title' => 'Login']);
     }
 }
