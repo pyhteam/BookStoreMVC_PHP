@@ -4,6 +4,7 @@ use App\Core\Router;
 
 $router = new Router();
 
+#endregion Admin Area
 // Authen
 $router->get('/auth/login', 'AuthenController@Login');
 $router->post('/auth/login', 'AuthenController@Login');
@@ -12,7 +13,6 @@ $router->get('/auth/logout', 'AuthenController@Logout');
 
 
 // User
-$router->get('/', 'DashboardController@Index');
 $router->get('/dashboard', 'DashboardController@Index');
 $router->get('/user', 'UserController@Index');
 $router->get('/user/page/{page}', 'UserController@Index');
@@ -72,5 +72,14 @@ $router->get('/order/detail/{id}/page/{page}', 'OrderController@Detail');
 
 $router->post('/order/approve/{id}', 'OrderController@UpdateStatus');
 $router->delete('/order/delete/{id}', 'OrderController@Delete');
+#region Admin Area
+
+#region Client Area
+$router->get('/', 'HomeController@Index');
+$router->get('/home', 'HomeController@Index');
+$router->get('/home/page/{page}', 'HomeController@Index');
+
+
+#endregion Client Area
 
 $router->run();

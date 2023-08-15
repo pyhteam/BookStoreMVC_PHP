@@ -111,4 +111,50 @@ class BookService extends BaseService implements IBookService {
         $sql = SqlCommon::DELETE($this->tableName, $id);
         return $this->context->query($sql) ? true : false;
 	}
+	/**
+	 * @param mixed $pageIndex
+	 * @param mixed $pageSize
+	 * @return mixed
+	 */
+	public function GetBookLastes($pageIndex, $pageSize) {
+		$offset = ($pageIndex - 1) * $pageSize;
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
+			ORDER BY CreatedAt DESC
+			LIMIT $offset, $pageSize
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
+	}
+	
+	/**
+	 *
+	 * @param mixed $limit
+	 * @return mixed
+	 */
+	public function GetBestSeller($limit) {
+		// order by TOP Book Best Seller from order detail 
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName, COUNT(od.BookId) AS Total FROM $this->tableName b
+			LEFT JOIN BookCategory bc ON b.CategoryId = bc.Id
+			LEFT JOIN OrderDetails od ON b.Id = od.BookId
+			GROUP BY b.Id
+			ORDER BY Total DESC
+			LIMIT $limit
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
+
+	}
 }
