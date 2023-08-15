@@ -101,4 +101,28 @@ class OrderService extends BaseService implements IOrderService {
         $sql = SqlCommon::DELETE($this->tableName, $id);
         return $this->context->query($sql) ? true : false;
 	}
+	/**
+	 * @param mixed $id
+	 * @param mixed $pageIndex
+	 * @param mixed $pageSize
+	 * @return mixed
+	 */
+	public function GetByUserId($id, $pageIndex, $pageSize) {
+		$offset = ($pageIndex - 1) * $pageSize;
+		$sql = "
+			SELECT o.*, u.Username FROM $this->tableName o
+			LEFT JOIN Users u ON o.UserId = u.Id
+			WHERE o.UserId = '$id'
+			ORDER BY CreatedAt DESC
+			LIMIT $offset, $pageSize
+		";
+		$data = $this->context->fetch($sql);
+		$orders = [];
+		foreach ($data as $item) {
+			$order = new Order($item);
+			array_push($orders, $order);
+		}
+		return $orders;
+
+	}
 }

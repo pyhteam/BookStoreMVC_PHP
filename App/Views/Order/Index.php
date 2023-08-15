@@ -21,7 +21,6 @@
                             <th>CreatedBy</th>
                             <th>UpdatedAt</th>
                             <th>UpdatedBy</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>

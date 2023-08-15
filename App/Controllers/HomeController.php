@@ -6,15 +6,22 @@ use App\Core\Config;
 use App\Core\Controller;
 use App\Services\BookServices\BookService;
 use App\Services\Common\Pagination;
+use App\Services\Common\Request;
+use App\Services\OrderDetailServices\OrderDetailService;
+use App\Services\OrderServices\OrderService;
 
 class HomeController extends Controller
 {
 
     private $layout = '_ClientLayout';
     private  $bookService;
+    private  $orderService;
+    private  $orderDetailService;
     public function __construct()
     {
         $this->bookService = new BookService();
+        $this->orderService = new OrderService();
+        $this->orderDetailService = new OrderDetailService();
     }
     public function Index($page = 1)
     {
@@ -49,5 +56,24 @@ class HomeController extends Controller
             'book' => $book,
             'booksRelated' => $booksRelated,
         ]);
+    }
+
+    // [GET]
+    public function CheckOut(){
+
+        $this->view('Home.CheckOut', [
+            'title' => 'Home',
+            'layout' => $this->layout,
+        ]);
+    }
+    // [POST]
+    public function Order(){
+        if(Request::method('POST')){
+            $data = [
+                'OrderId' => uniqid(),
+                'BookId' => Request::post('BookId'),
+                'Quantity' => Request::post('Quantity'),
+            ]
+        }
     }
 }

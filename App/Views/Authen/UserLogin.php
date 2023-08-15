@@ -132,13 +132,22 @@ use App\Services\Common\Session;
         <div class="col-4">
             <div class="card">
                 <div class="card-title">
-                    <h3>Admin - Ma Seo Sen</h3>
+                    <h3>Thông tin tài khoản</h3>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li><span>Username</span></li>
-                        <li><span>Email</span></li>
-                        <li><span>Phone</span></li>
+                        <li>
+                            <label>Tài khoản</label>
+                            <span><?= Session::get('user')->Username . ' - ' . Session::get('user')->FullName ?> </span>
+                        </li>
+                        <li>
+                            <label>Email</label>
+                            <span><?= Session::get('user')->Email ?></span>
+                        </li>
+                        <li>
+                            <label>Phone</label>
+                            <span><?= Session::get('user')->Phone ?></span>
+                        </li>
                         <li><a href="/admin/logout">Logout</a></li>
                     </ul>
                 </div>
@@ -154,21 +163,50 @@ use App\Services\Common\Session;
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
+                                    <th>#</th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Tổng Tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày Order</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Book 1</td>
-                                    <td>120.000</td>
-                                    <td>12/12/2022</td>
-                                </tr>
+                                <?php $index = 1;
+                                foreach ($orders as $item) : ?>
+                                    <tr>
+                                        <td><?= $index ?></td>
+                                        <td><?= $item->Id ?></td>
+                                        <td><?= $item->TotalPrice ?></td>
+                                        <td><?php
+                                            switch ($item->Status) {
+                                                case 'Pending':
+                                                    echo '<span class="badge badge-warning">Đang chờ</span>';
+                                                    break;
+                                                case 'Approved':
+                                                    echo '<span class="badge badge-success">Đã duyệt</span>';
+                                                    break;
+                                                case 'Cancelled':
+                                                    echo '<span class="badge badge-danger">Đã hủy</span>';
+                                                    break;
+                                                default:
+                                                    echo '<span class="badge badge-dark">Unknown</span>';
+                                                    break;
+                                            }
+                                            ?></td>
+
+                                        <td><?= $item->CreatedAt; ?></td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm" onclick="cancel('<?= $item->Id ?>')" type="button">Hủy đơn</button>
+                                        </td>
+                                    </tr>
+                                <?php $index++;
+                                endforeach; ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-sm-12">
+                        <?= $pagination->createLinks(); ?>
                     </div>
                 </div>
             </div>

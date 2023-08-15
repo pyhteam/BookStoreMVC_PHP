@@ -2,12 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Core\Config;
 use App\Core\Controller;
 use App\Services\Common\Enums\HttpMethod;
 use App\Services\Common\JWTToken;
+use App\Services\Common\Pagination;
 use App\Services\Common\Request;
 use App\Services\Common\Response;
 use App\Services\Common\Session;
+use App\Services\OrderServices\OrderService;
 use App\Services\RoleServices\RoleService;
 use App\Services\UserRoleServices\UserRoleService;
 use App\Services\UserServices\UserService;
@@ -17,11 +20,13 @@ class AuthenController extends Controller
     private $userService = null;
     private $userRoleService = null;
     private $roleService = null;
+    private $orderService = null;
     public function __construct()
     {
         $this->userService = new UserService();
         $this->userRoleService = new UserRoleService();
         $this->roleService = new RoleService();
+        $this->orderService = new OrderService();
     }
     public function Login()
     {
@@ -97,7 +102,7 @@ class AuthenController extends Controller
     }
 
     // For Client Site
-    public function UserLogin()
+    public function UserLogin($page = 1)
     {
         if (Request::method("POST")) {
             $post = $_POST;
@@ -136,6 +141,24 @@ class AuthenController extends Controller
             ], 'Đăng nhập thành công');
             return;
         }
-        $this->render('Authen.UserLogin', '_ClientLayout', ['title' => 'Login']);
+        $userId = Session::get('user')->Id;
+
+        $pageConfig = Config::PageConfig();
+        $pageIndex = $page ?? 1;
+        $totalRecords   = count($this->orderService->GetAll());
+        $pagConfig = [
+            'baseURL' => '/book/page',
+            'totalRows' => $totalRecords,
+            'perPage' => $pageConfig['PageSize'],
+        ];
+        $pagination = new Pagination($pagConfig);
+        
+        $orders = $this->orderService->GetByUserId($userId, $pageIndex, $pageConfig['PageSize']);
+
+        $this->render('Authen.UserLogin', '_ClientLayout', [
+            'title' => 'Account page',
+            'orders' => $orders,
+            'pagination' => $pagination
+        ]);
     }
 }

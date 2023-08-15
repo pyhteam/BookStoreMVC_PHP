@@ -5,6 +5,7 @@ use App\Core\Router;
 $router = new Router();
 
 $router->get('/account', 'AuthenController@UserLogin');
+$router->get('/account/page/{page}', 'AuthenController@UserLogin');
 $router->post('/account', 'AuthenController@UserLogin');
 
 $router->get('/auth/login', 'AuthenController@Login');
@@ -84,6 +85,8 @@ $router->get('/home', 'HomeController@Index');
 $router->get('/home/page/{page}', 'HomeController@Index');
 
 $router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
+
+$router->get('/home/check-out', 'HomeController@CheckOut');
 
 
 #endregion Client Area
