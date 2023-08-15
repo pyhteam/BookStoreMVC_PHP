@@ -91,9 +91,12 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
+-- Pass: 123456
+-- CMD: composer dump-autoload
+-- CMD: php -S localhost:8080 -t public
 
 INSERT INTO `users` (`Id`, `Username`, `Email`, `Password`, `FullName`, `Phone`, `Avatar`, `CreatedAt`, `CreatedBy`, `UpdatedAt`, `UpdatedBy`, `IsActive`) VALUES
-('3df1e08c-38dc-11ee-863c-a036bcab437e', 'tubxyaas1', 'pyhteam.solutions@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Ma Seo Sen', NULL, NULL, '2023-08-12 17:39:16', 'System', NULL, NULL, 1);
+('3df1e08c-38dc-11ee-863c-a036bcab437e', 'admin', 'admin@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Admin System', NULL, NULL, '2023-08-12 17:39:16', 'System', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 

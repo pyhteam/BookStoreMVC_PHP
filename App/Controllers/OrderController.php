@@ -64,7 +64,7 @@ class OrderController extends AdminController {
        if(Request::method('POST')){
             $order = $this->orderService->GetById($id);
             $order = [
-                'Status' => 'Approved'
+                'Status' => !Request::get('Status')? 'Approved': Request::get('Status')
             ];
             $result = $this->orderService->Update($order, $id);
             return  $result ? Response::success('Cập nhật thành công') : Response::badRequest('Cập nhật thất bại');

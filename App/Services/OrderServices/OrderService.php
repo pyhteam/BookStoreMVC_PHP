@@ -59,7 +59,7 @@ class OrderService extends BaseService implements IOrderService {
         $sql = "
             SELECT o.*, u.Username FROM $this->tableName o
             LEFT JOIN Users u ON o.UserId = u.Id
-            WHERE o.Id = $id
+            WHERE o.Id = '$id'
         ";
         $data = $this->context->fetch_one($sql);
         $order = new Order($data);

@@ -20,6 +20,7 @@ $router->get('/auth/logout', 'AuthenController@Logout');
 #endregion Admin Area
 
 // User
+$router->get('/admin', 'DashboardController@Index');
 $router->get('/dashboard', 'DashboardController@Index');
 $router->get('/user', 'UserController@Index');
 $router->get('/user/page/{page}', 'UserController@Index');
@@ -89,8 +90,8 @@ $router->get('/home/page/{page}', 'HomeController@Index');
 $router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
 
 $router->get('/home/check-out', 'HomeController@CheckOut');
+$router->post('/order', 'HomeController@Order');
 
-
+$router->post('/cancelled/{id}','HomeController@Cancelled');
 #endregion Client Area
-
 $router->run();

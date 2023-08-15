@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                Danh Sách Order Detail
+                Danh Sách Order Detail - Mã Order #<strong style="color: red;" ><?= $order->Code ?></strong>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
@@ -13,7 +13,7 @@
                             <th>BookName</th>
                             <th>BookPrice</th>
                             <th>Quantity</th>
-                           
+
                             <th>CreatedAt</th>
                             <th>CreatedBy</th>
                             <th>UpdatedAt</th>
@@ -22,10 +22,10 @@
                     </thead>
                     <tbody>
                         <?php $index = 1;
-                        foreach ($orderDetail as $item) : ?>
+                        foreach ($order->OrderDetails as $item) : ?>
                             <tr>
                                 <td><?= $index ?></td>
-                                <td><?= $item->BookImage?'<img src="'.$item->BookImage.'" width="100px" height="100px" />' : '' ?></td>
+                                <td><?= $item->BookImage ? '<img src="' . $item->BookImage . '" width="100px" height="100px" />' : '' ?></td>
                                 <td><?= $item->BookName ?></td>
                                 <td><?= $item->BookPrice ?></td>
                                 <td><?= $item->Quantity ?></td>

@@ -11,7 +11,6 @@ class Config
         // Load your configuration data here
         $this->loadConfig();
     }
-
     private function loadConfig()
     {
         // Example configuration data
@@ -27,7 +26,7 @@ class Config
     public static function PageConfig()
     {
         return  [
-            'PageSize' => 10,
+            'PageSize' => 8,
             'PageIndex' => 0,
             'PageOption' => [10, 20, 50, 100],
         ];

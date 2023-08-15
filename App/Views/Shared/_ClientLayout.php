@@ -22,7 +22,7 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="/">
                         <img src="/assets-client/images/EbookStore-Logo.png" alt="EbookStore-Logo" /></a>
                 </div>
                 <!----------  Nav Bar ------------------>
@@ -35,8 +35,9 @@
                         <li><a href="/account">Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html">
+                <a href="/home/check-out" class="cart-container">
                     <img src="/assets-client/images/cart.png" alt="Shoping Cart" width="28px" height="28px" style="margin-left: 10px; margin-top: 15px" />
+                    <span id="boxCart" class="badge badge-light cart-badge">0</span>
                 </a>
                 <img src="/assets-client/images/menu.png" class="menu-icon" onclick="menutoggle()" />
             </div>
@@ -146,6 +147,15 @@
                 MenuItems.style.maxHeight = "0px";
             }
         }
+
+        // get count from localStorage
+        let carts = JSON.parse(localStorage.getItem("carts"));
+        console.log(carts);
+        let count = 0;
+        if (carts) {
+            count = carts.length;
+        }
+        $("#boxCart").text(count);
     </script>
 </body>
 

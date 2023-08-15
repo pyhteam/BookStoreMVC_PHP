@@ -9,6 +9,7 @@ use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Request;
 use App\Services\Common\Response;
+use App\Services\Common\Session;
 use App\Services\OrderDetailServices\OrderDetailService;
 use App\Services\OrderServices\OrderService;
 
@@ -74,7 +75,7 @@ class HomeController extends Controller
             $codeOrder = Helper::RandomString(6);
             $oder = [
                 'Code' => $codeOrder,
-                'UserId' => 1,
+                'UserId' => Session::get('user')->Id,
                 'TotalPrice' => Request::post('TotalPrice'),
                 'Status' => "Pending",
                 'ShipName' => Request::post('ShipName'),
@@ -83,16 +84,34 @@ class HomeController extends Controller
             ];
             $result = $this->orderService->Add($oder);
             if(!$result) return Response::badRequest('Đặt hàng thất bại');
+
             // get order id
             $order = $this->orderService->GetByCode($codeOrder);
             if(!$order) return Response::notFound('Invalid order');
             $orderDetails = Request::post('OrderDetails');
+            $orderDetailsSave = [];
             foreach($orderDetails as $orderDetail){
-                $orderDetail['OrderId'] = $order->Id;
+                array_push($orderDetailsSave,[
+                    'OrderId' => $order->Id,
+                    'BookId' => $orderDetail['BookId'],
+                    'Quantity' => $orderDetail['Quantity']
+                ]);
+            }
+            foreach($orderDetailsSave as $orderDetail){
                 $result = $this->orderDetailService->Add($orderDetail);
-                if(!$result) return Response::badRequest('Chi tiết đặt hàng thất bại');  
+                if(!$result) return Response::badRequest('Chi tiết đặt hàng thất bại');
             }
             return Response::success('Đặt hàng thành công');
+        }
+    }
+    public function Cancelled($id){
+        if(Request::method('POST')){
+            $order = $this->orderService->GetById($id);
+            $order = [
+                'Status' => !Request::get('Status') ? 'Cancelled' : Request::get('Status')
+            ];
+            $result = $this->orderService->Update($order, $id);
+            return  $result ? Response::success('Cập nhật thành công') : Response::badRequest('Cập nhật thất bại');
         }
     }
 }

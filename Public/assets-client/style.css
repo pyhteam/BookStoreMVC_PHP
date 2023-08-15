@@ -522,3 +522,52 @@ form a {
 }
 
 /* --------------------------The End----------------------- */
+/* CSS for Badge on Cart Icon */
+.cart-container {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-badge {
+    position: absolute;
+    top: 6px;
+    right: -22px;
+    background-color: #d40d49;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+/* Add Bootstrap CSS classes and your custom styling here */
+
+.pagination {
+    margin-top: 15px; /* Adjust as needed */
+}
+
+.page-item {
+    display: inline-block;
+    margin-right: 5px; /* Adjust as needed */
+}
+
+.page-link {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.page-link.active {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+}
+
+/* If you want to hide the pagination item on small screens */
+@media (max-width: 767px) {
+    .page-item.d-none.d-md-block {
+        display: none;
+    }
+}

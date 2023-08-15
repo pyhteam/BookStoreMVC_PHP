@@ -25,7 +25,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $index = 1; foreach ($orders as $item) : ?>
+                        <?php $index = 1;
+                        foreach ($orders as $item) : ?>
                             <tr>
                                 <td><?= $index ?></td>
                                 <td><?= $item->Username ?></td>
@@ -33,22 +34,22 @@
                                 <td><?= $item->ShipAddress ?></td>
                                 <td><?= $item->ShipPhone ?></td>
                                 <td><?= $item->TotalPrice ?></td>
-                                <td><?php 
-                                switch($item->Status){
-                                    case 'Pending':
-                                        echo '<span class="badge badge-warning">Đang chờ</span>';
-                                        break;
-                                    case 'Approved':
-                                        echo '<span class="badge badge-success">Đã duyệt</span>';
-                                        break;
-                                    case 'Cancelled':
-                                        echo '<span class="badge badge-danger">Đã hủy</span>';
-                                        break;
-                                    default:
-                                        echo '<span class="badge badge-dark">Unknown</span>';
-                                        break;
-                                }
-                                ?></td>
+                                <td><?php
+                                    switch ($item->Status) {
+                                        case 'Pending':
+                                            echo '<span style="color:orange" >Đang chờ</span>';
+                                            break;
+                                        case 'Approved':
+                                            echo '<span style="color:green" >Đã duyệt</span>';
+                                            break;
+                                        case 'Cancelled':
+                                            echo '<span style="color:red" >Đã hủy</span>';
+                                            break;
+                                        default:
+                                            echo '<span style="color:orange" >Đang chờ</span>';
+                                            break;
+                                    }
+                                    ?></td>
 
                                 <td><?= $item->CreatedAt; ?></td>
                                 <td><?= $item->CreatedBy; ?></td>
@@ -56,11 +57,14 @@
                                 <td><?= $item->UpdatedBy; ?></td>
                                 <td>
                                     <a href="/order/detail/<?= $item->Id ?>" class="btn btn-primary btn-sm">Chi tiết</a>
-                                    <button class="btn btn-success btn-sm" onclick="approve('<?= $item->Id ?>')" type="button">Duyệt đơn</button>
+                                    <?php if ($item->Status == 'Pending') : ?>
+                                        <button class="btn btn-success btn-sm" onclick="approve('<?= $item->Id ?>')" type="button">Duyệt đơn</button>
+                                    <?php endif; ?>
                                     <button onclick="remove('<?= $item->Id ?>')" type="button" class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>
-                        <?php $index++; endforeach; ?>
+                        <?php $index++;
+                        endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -128,9 +132,8 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/order/update-status/' + id,
+                    url: '/order/approve/' + id,
                     method: 'POST',
-                    contentType: 'application/json',
                     success: function(res) {
                         console.log(res);
                         if (res.success == true) {

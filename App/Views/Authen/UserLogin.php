@@ -197,7 +197,9 @@ use App\Services\Common\Session;
 
                                         <td><?= $item->CreatedAt; ?></td>
                                         <td>
-                                            <button class="btn btn-success btn-sm" onclick="cancel('<?= $item->Id ?>')" type="button">Hủy đơn</button>
+                                            <?php if ($item->Status == 'Pending') : ?>
+                                                <a href="javascript:void(0)" onclick="cancel('<?= $item->Id ?>')" class="btn btn-danger">Hủy</a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php $index++;
@@ -335,5 +337,57 @@ use App\Services\Common\Session;
             }
 
         });
+    }
+
+    function cancel(id) {
+        // ask before delete
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn hủy đơn hàng này?',
+            text: "Bạn sẽ không thể khôi phục lại đơn hàng này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#007bff',
+            confirmButtonText: 'Hủy đơn hàng',
+            cancelButtonText: 'Không hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/cancelled/' + id,
+                    method: 'POST',
+                    data: {
+                        Status: 'Cancelled'
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        if (res.success == true) {
+                            Swal.fire(
+                                'Hủy đơn hàng thành công!',
+                                res.message,
+                                'success'
+                            )
+                            setTimeout(function() {
+                                window.location.href = '/account';
+                            }, 1500);
+                        } else {
+                            Swal.fire(
+                                'Hủy đơn hàng thất bại!',
+                                res.message,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'server error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                });
+            }
+        })
     }
 </script>

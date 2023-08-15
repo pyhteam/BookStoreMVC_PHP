@@ -63,6 +63,7 @@ class AuthenController extends Controller
 
             Response::success([
                 'userId' => $result->Id,
+                 'role' => $roleName,
                 'token' => $token,
             ], 'Đăng nhập thành công');
             return;
@@ -171,7 +172,7 @@ class AuthenController extends Controller
             $pageIndex = $page ?? 1;
             $totalRecords   = count($this->orderService->GetAll());
             $pagConfig = [
-                'baseURL' => '/book/page',
+                'baseURL' => '/account/page',
                 'totalRows' => $totalRecords,
                 'perPage' => $pageConfig['PageSize'],
             ];
