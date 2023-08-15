@@ -142,6 +142,7 @@ CREATE TABLE `book` (
 CREATE TABLE `orders` (
   `Id` char(36) NOT NULL DEFAULT 'UUID()',
 
+  `Code` varchar(40) NOT NULL,
   `UserId` char(36) NOT NULL,
   `TotalPrice` INT(11) DEFAULT 0,
   `Status` varchar(100) NOT NULL,

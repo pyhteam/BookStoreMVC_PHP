@@ -71,25 +71,49 @@ class AuthenController extends Controller
     }
     public function Register()
     {
-        if (Request::method(HttpMethod::POST)) {
+        if (Request::method("POST")) {
             $username = Request::post('Username');
             $password = Request::post('Password');
             $confirmPassword = Request::post('ConfirmPassword');
             $email = Request::post('Email');
+            if ($username == null || $password == null || $confirmPassword == null || $email == null) {
+                Response::badRequest([], 'Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+            // validate email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                Response::badRequest([], 'Email không hợp lệ');
+                return;
+            }
             if ($password != $confirmPassword) {
                 Response::badRequest([], 'Mật khẩu không khớp');
+                return;
+            }
+            // check email exist
+            $user = $this->userService->GetByEmail($email);
+            if ($user != null) {
+                Response::notFound([], 'Email đã tồn tại');
+                return;
             }
             $roleId = $this->roleService->GetByName('Member')->Id;
             $user = [
                 'Username' => $username,
                 'Password' => $password,
                 'Email' => $email,
-                'RoleId' => $roleId
             ];
             $result = $this->userService->Register($user);
             if ($result == null) {
                 Response::notFound([], 'Tài khoản đã tồn tại');
+                return;
             }
+
+            $user = $this->userService->GetByEmail($email);
+            $userId = $user->Id;
+            $userRole = [
+                'UserId' => $userId,
+                'RoleId' => $roleId
+            ];
+            $this->userRoleService->AddRoleToUser($userId, $roleId);
             Response::success([], 'Đăng ký thành công');
             return;
         }
@@ -98,7 +122,7 @@ class AuthenController extends Controller
     public function Logout()
     {
         Session::destroy();
-        $this->redirect('/auth/login');
+        $this->redirect('/');
     }
 
     // For Client Site
@@ -141,24 +165,28 @@ class AuthenController extends Controller
             ], 'Đăng nhập thành công');
             return;
         }
-        $userId = Session::get('user')->Id;
+        if(Session::has('user')) {
+            $userId = Session::get('user')->Id;
+            $pageConfig = Config::PageConfig();
+            $pageIndex = $page ?? 1;
+            $totalRecords   = count($this->orderService->GetAll());
+            $pagConfig = [
+                'baseURL' => '/book/page',
+                'totalRows' => $totalRecords,
+                'perPage' => $pageConfig['PageSize'],
+            ];
+            $pagination = new Pagination($pagConfig);
 
-        $pageConfig = Config::PageConfig();
-        $pageIndex = $page ?? 1;
-        $totalRecords   = count($this->orderService->GetAll());
-        $pagConfig = [
-            'baseURL' => '/book/page',
-            'totalRows' => $totalRecords,
-            'perPage' => $pageConfig['PageSize'],
-        ];
-        $pagination = new Pagination($pagConfig);
-        
-        $orders = $this->orderService->GetByUserId($userId, $pageIndex, $pageConfig['PageSize']);
+            $orders = $this->orderService->GetByUserId($userId, $pageIndex, $pageConfig['PageSize']);
+            $this->render('Authen.UserLogin', '_ClientLayout', [
+                'title' => 'Account page',
+                'orders' => $orders,
+                'pagination' => $pagination
+            ]);
+            return;
+        }
 
         $this->render('Authen.UserLogin', '_ClientLayout', [
-            'title' => 'Account page',
-            'orders' => $orders,
-            'pagination' => $pagination
-        ]);
+            'title' => 'Account page']);
     }
 }

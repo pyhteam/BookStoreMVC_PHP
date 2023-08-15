@@ -109,19 +109,19 @@ use App\Services\Common\Session;
                     <hr id="indicator" />
 
                     <form id="signInForm" name="myform">
-                        <input type="text" placeholder="Username" id="Username" />
+                        <input type="text" placeholder="Email" id="UsernameLogin" />
                         <span id="uname"></span>
-                        <input type="password" placeholder="Password" id="Password" />
-                        <button type="button" class="btn">Sign In</button>
+                        <input type="password" placeholder="Password" id="PasswordLogin" />
+                        <button type="button" onclick="login()" class="btn">Sign In</button>
                         <a href="">Forgot password</a>
                     </form>
 
                     <form id="signUpForm">
                         <input type="text" placeholder="Username" id="Username" />
                         <input type="email" placeholder="Email" id="Email" />
-                        <input type="password" placeholder="Password" id="Password" />
-                        <input type="password" placeholder="Confirm Password" id="ConfirmPassword" />
-                        <button type="button" class="btn">Sign Up</button>
+                        <input type="password" placeholder="Password" name="Password" id="Password" />
+                        <input type="password" placeholder="Confirm Password" name="ConfirmPassword" id="ConfirmPassword" />
+                        <button type="button" onclick="register()" class="btn">Sign Up</button>
                     </form>
                 </div>
             </div>
@@ -148,7 +148,7 @@ use App\Services\Common\Session;
                             <label>Phone</label>
                             <span><?= Session::get('user')->Phone ?></span>
                         </li>
-                        <li><a href="/admin/logout">Logout</a></li>
+                        <li><a href="/auth/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -176,7 +176,7 @@ use App\Services\Common\Session;
                                 foreach ($orders as $item) : ?>
                                     <tr>
                                         <td><?= $index ?></td>
-                                        <td><?= $item->Id ?></td>
+                                        <td><?= $item->Code ?></td>
                                         <td><?= $item->TotalPrice ?></td>
                                         <td><?php
                                             switch ($item->Status) {
@@ -233,5 +233,107 @@ use App\Services\Common\Session;
         signUpForm.style.transform = "translateX(0px)";
         signInForm.style.transform = "translateX(0px)";
         indicator.style.transform = "translateX(100px)";
+    }
+
+    function login() {
+        var username = $('#UsernameLogin').val();
+        var password = $('#PasswordLogin').val();
+        var data = {
+            username: username,
+            password: password
+        }
+        $.ajax({
+            url: '/auth/login',
+            method: 'POST',
+            data: {
+                Username: username,
+                Password: password
+            },
+            success: function(res) {
+                console.log(res);
+                if (res.success == true) {
+                    Swal.fire(
+                        'Đăng nhập thành công!',
+                        res.message,
+                        'success'
+                    )
+                    // set local storage
+                    localStorage.setItem('token', res.data.token);
+                    setTimeout(function() {
+                        window.location.href = '/account';
+                    }, 1500);
+                } else {
+                    Swal.fire(
+                        'Đăng nhập thất bại!',
+                        res.message,
+                        'error'
+                    )
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'server error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        });
+    }
+
+    function register() {
+        var username = $('#Username').val();
+        var password = $('#Password').val();
+        var email = $('#Email').val();
+        var confirmPassword = $('#ConfirmPassword').val();
+        var data = {
+            Username: username,
+            Password: password,
+            Email: email,
+            ConfirmPassword: confirmPassword
+        }
+        $.ajax({
+            url: '/auth/register',
+            method: 'POST',
+            data: {
+                Username: username,
+                Password: password,
+                Email: email,
+                ConfirmPassword: confirmPassword
+            },
+            success: function(res) {
+                console.log(res);
+                if (res.success == true) {
+                    Swal.fire(
+                        'Đăng ký thành công!',
+                        res.message,
+                        'success'
+                    )
+                    // set local storage
+                    localStorage.setItem('token', res.data.token);
+                    setTimeout(function() {
+                        window.location.href = '/account';
+                    }, 1500);
+                } else {
+                    Swal.fire(
+                        'Đăng ký thất bại!',
+                        res.message,
+                        'error'
+                    )
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'server error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        });
     }
 </script>

@@ -31,6 +31,9 @@ class UserService extends BaseService implements IUserService
 	{
 		$sql = SqlCommon::Select_Condition($this->tableName, "WHERE Email = '$email'");
 		$data =  $this->context->fetch_one($sql);
+		if(!$data) {
+			return null;
+		}
 		$user = new User($data);
 		return $user;
 	}

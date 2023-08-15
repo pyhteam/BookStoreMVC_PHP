@@ -125,4 +125,18 @@ class OrderService extends BaseService implements IOrderService {
 		return $orders;
 
 	}
+	/**
+	 * @param mixed $code
+	 * @return mixed
+	 */
+	public function GetByCode($code) {
+		$sql = "
+			SELECT o.*, u.Username FROM $this->tableName o
+			LEFT JOIN Users u ON o.UserId = u.Id
+			WHERE o.Code = '$code'
+		";
+		$data = $this->context->fetch_one($sql);
+		$order = new Order($data);
+		return $order;
+	}
 }

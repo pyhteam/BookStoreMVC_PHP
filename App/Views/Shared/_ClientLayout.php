@@ -7,8 +7,6 @@
     <title><?= $title ?? "Book Store" ?></title>
     <link rel="stylesheet" href="/assets-client/style.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?
-      family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="/assets/images/EbookStore-Logo.png" rel="icon" />
     <link href="/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
@@ -135,6 +133,7 @@
             <p class="copyright">Copyright 2020 - EbookStore</p>
         </div>
     </div>
+    <script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <!-- ---------Javascript for toggle menu------------- -->
     <script>
         var MenuItems = document.getElementById("MenuItems");

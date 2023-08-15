@@ -12,6 +12,8 @@ $router->get('/auth/login', 'AuthenController@Login');
 $router->post('/auth/login', 'AuthenController@Login');
 
 $router->get('/auth/register', 'AuthenController@Register');
+$router->post('/auth/register', 'AuthenController@Register');
+
 $router->get('/auth/logout', 'AuthenController@Logout');
 
 

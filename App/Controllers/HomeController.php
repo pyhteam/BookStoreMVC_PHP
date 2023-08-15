@@ -5,8 +5,10 @@ namespace App\Controllers;
 use App\Core\Config;
 use App\Core\Controller;
 use App\Services\BookServices\BookService;
+use App\Services\Common\Helper;
 use App\Services\Common\Pagination;
 use App\Services\Common\Request;
+use App\Services\Common\Response;
 use App\Services\OrderDetailServices\OrderDetailService;
 use App\Services\OrderServices\OrderService;
 
@@ -69,11 +71,28 @@ class HomeController extends Controller
     // [POST]
     public function Order(){
         if(Request::method('POST')){
-            $data = [
-                'OrderId' => uniqid(),
-                'BookId' => Request::post('BookId'),
-                'Quantity' => Request::post('Quantity'),
-            ]
+            $codeOrder = Helper::RandomString(6);
+            $oder = [
+                'Code' => $codeOrder,
+                'UserId' => 1,
+                'TotalPrice' => Request::post('TotalPrice'),
+                'Status' => "Pending",
+                'ShipName' => Request::post('ShipName'),
+                'ShipPhone' => Request::post('ShipPhone'),
+                'ShipAddress' => Request::post('ShipAddress'),
+            ];
+            $result = $this->orderService->Add($oder);
+            if(!$result) return Response::badRequest('Đặt hàng thất bại');
+            // get order id
+            $order = $this->orderService->GetByCode($codeOrder);
+            if(!$order) return Response::notFound('Invalid order');
+            $orderDetails = Request::post('OrderDetails');
+            foreach($orderDetails as $orderDetail){
+                $orderDetail['OrderId'] = $order->Id;
+                $result = $this->orderDetailService->Add($orderDetail);
+                if(!$result) return Response::badRequest('Chi tiết đặt hàng thất bại');  
+            }
+            return Response::success('Đặt hàng thành công');
         }
     }
 }

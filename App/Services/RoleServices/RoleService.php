@@ -13,7 +13,7 @@ class RoleService extends BaseService implements IRoleService
 	 * @return mixed
 	 */
 	public function GetByName($name) {
-        $sql = SqlCommon::Select_Condition($this->tableName, "WHERE Name = $name");
+        $sql = SqlCommon::Select_Condition($this->tableName, "WHERE Name = '$name'");
         $data =  $this->context->fetch_one($sql);
         $role = new Role($data);
         return $role;

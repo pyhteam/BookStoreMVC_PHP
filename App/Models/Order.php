@@ -7,6 +7,7 @@ class Order extends BaseModel {
 
     public $UserId;
     public $TotalPrice;
+    public $Code;
     public $Status;
     public $ShipAddress;
     public $ShipName;
@@ -23,6 +24,7 @@ class Order extends BaseModel {
         $this->ShipName = $order['ShipName'] ?? '';
         $this->ShipPhone = $order['ShipPhone'] ?? '';
         $this->ShipAddress = $order['ShipAddress'] ?? '';
+        $this->Code = $order['Code'];
         // For View
         $this->Username = $order['Username'] ?? '';
         $this->OrderDetails = $order['OrderDetails'] ?? [];
