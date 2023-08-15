@@ -79,6 +79,8 @@ $router->get('/', 'HomeController@Index');
 $router->get('/home', 'HomeController@Index');
 $router->get('/home/page/{page}', 'HomeController@Index');
 
+$router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
+
 
 #endregion Client Area
 

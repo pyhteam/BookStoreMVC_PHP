@@ -54,4 +54,14 @@ namespace App\Services\Common;
 	
 		return strtolower(trim(preg_replace('~[^0-9a-z' . preg_quote($extra, '~') . ']++~i', $slug, $string), $slug));
 	}
+
+	// Number to Currency
+	public static function  formatCurrencyVND($number)
+	{
+		// Set locale to Vietnamese
+		setlocale(LC_MONETARY, 'vi_VN');
+		// Format the number as currency in VND
+		$formattedNumber = number_format($number, 0, ',', '.') . ' đ';
+		return $formattedNumber;
+	}
  }

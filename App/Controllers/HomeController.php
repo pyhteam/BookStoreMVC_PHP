@@ -39,4 +39,15 @@ class HomeController extends Controller
             'pagination' => $pagination,
         ]);
     }
+    public function Detail($slug,$id)
+    {
+        $book = $this->bookService->GetById($id);
+        $booksRelated = $this->bookService->GetByCategory($book->CategoryId, 4);
+        $this->view('Home.Detail', [
+            'title' => 'Home',
+            'layout' => $this->layout,
+            'book' => $book,
+            'booksRelated' => $booksRelated,
+        ]);
+    }
 }
