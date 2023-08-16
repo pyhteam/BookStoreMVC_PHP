@@ -105,6 +105,8 @@ class BookController extends AdminController
     {
         if(Request::method("POST")){
             $books = $this->bookService->GetByKey($key);
+            // slice  get 8 item
+            $books = array_slice($books, 0, 8);
             Response::success($books, 'Tìm kiếm thành công!', 200);
         }
     }
