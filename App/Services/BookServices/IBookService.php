@@ -8,6 +8,7 @@ interface IBookService extends IBaseInterface {
     //get book lastes
     public function GetBookLastes($pageIndex,$pageSize);
     public function GetBestSeller($limit);
+    public function GetByKey($key);
 
 
 }

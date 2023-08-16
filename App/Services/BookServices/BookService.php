@@ -157,4 +157,23 @@ class BookService extends BaseService implements IBookService {
 		return $books;
 
 	}
+	/**
+	 * @param mixed $key
+	 * @return mixed
+	 */
+	public function GetByKey($key) {
+		$sql = "
+			SELECT b.*, bc.Name AS CategoryName FROM $this->tableName b
+			JOIN BookCategory bc ON b.CategoryId = bc.Id
+			WHERE b.Title LIKE '%$key%'
+			ORDER BY CreatedAt DESC
+		";
+		$data = $this->context->fetch($sql);
+		$books = [];
+		foreach ($data as $item) {
+			$book = new Book($item);
+			array_push($books, $book);
+		}
+		return $books;
+	}
 }

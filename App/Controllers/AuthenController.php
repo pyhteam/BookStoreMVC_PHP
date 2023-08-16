@@ -46,8 +46,8 @@ class AuthenController extends Controller
             }
             // get role
             $userRole = $this->userRoleService->GetRoleByUsername($result->Username);
-            $roleId = $userRole[0]['Id'];
-            $roleName =  $userRole[0]['Name'];
+            $roleId = $userRole[0]['Id'] ?? '';
+            $roleName =  $userRole[0]['Name'] ?? 'Admin';
             // set session
             Session::set('user', $result);
             $token = JWTToken::generateToken([

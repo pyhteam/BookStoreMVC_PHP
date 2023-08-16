@@ -26,6 +26,12 @@
                         <img src="/assets-client/images/EbookStore-Logo.png" alt="EbookStore-Logo" /></a>
                 </div>
                 <!----------  Nav Bar ------------------>
+                <div class="search">
+                    <form action="#" method="POST">
+                        <input type="text" id="key" placeholder="Search for Book..." />
+                        <button  type="button" onclick="seachBook()" class="btn-primary">Search</button>
+                    </form>
+                </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="/">Home</a></li>
@@ -156,6 +162,12 @@
             count = carts.length;
         }
         $("#boxCart").text(count);
+
+        // serach 
+        function seachBook() {
+            let key = $("#key").val();
+            window.location.href = "/home/search/" + key;
+        }
     </script>
 </body>
 

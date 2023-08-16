@@ -571,3 +571,41 @@ form a {
         display: none;
     }
 }
+/* Styling for the form container */
+.form-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Styling for the form */
+.search form {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling for the search input */
+.search input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Styling for the search button */
+.search .btn-primary {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect for the search button */
+.form-search .btn-primary:hover {
+  background-color: #0056b3;
+}

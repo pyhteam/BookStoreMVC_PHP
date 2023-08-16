@@ -60,6 +60,16 @@ class HomeController extends Controller
             'booksRelated' => $booksRelated,
         ]);
     }
+    public function Search($key)
+    {   
+        $key = urldecode($key);
+        $books = $this->bookService->GetByKey($key);
+        $this->view('Home.Search', [
+            'title' => 'Search by - ' . $key,
+            'layout' => $this->layout,
+            'books' => $books,
+        ]);
+    }
 
     // [GET]
     public function CheckOut(){

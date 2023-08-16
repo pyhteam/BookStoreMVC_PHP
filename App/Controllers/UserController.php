@@ -103,9 +103,7 @@ class UserController extends AdminController
             $this->userService->Update($userSave, $id);
             $this->userRoleService->RemoveRoleFromUser($id, $roleId);
             $this->userRoleService->AddRoleToUser($id, $roleId);
-            $this->view('User.Edit', ['user' => (object)$userSave, 'title' => 'Edit User', 
-            'roles' => $roles,
-            'message' => 'Cập nhật thành công!']);
+            $this->redirect('/user');
 
         }
 

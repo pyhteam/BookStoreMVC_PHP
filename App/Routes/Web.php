@@ -87,6 +87,9 @@ $router->get('/', 'HomeController@Index');
 $router->get('/home', 'HomeController@Index');
 $router->get('/home/page/{page}', 'HomeController@Index');
 
+$router->get('/home/search/{key}', 'HomeController@Search');
+$router->post('/home/search/{key}', 'HomeController@Search');
+
 $router->get('/home/detail/{slug}/{id}', 'HomeController@Detail');
 
 $router->get('/home/check-out', 'HomeController@CheckOut');
