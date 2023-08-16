@@ -101,6 +101,14 @@ class BookController extends AdminController
         $this->view('Book.Edit', ['book' => $book, 'title' => 'Sửa thông tin sách', 'bookCategories' => $bookCategories]);
     }
 
+    public function Search($key)
+    {
+        if(Request::method("POST")){
+            $books = $this->bookService->GetByKey($key);
+            Response::success($books, 'Tìm kiếm thành công!', 200);
+        }
+    }
+
     public function Delete($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {

@@ -63,6 +63,8 @@ $router->delete('/book-category/delete/{id}', 'BookCategoryController@Delete');
 $router->get('/book', 'BookController@Index');
 $router->get('/book/page/{page}', 'BookController@Index');
 
+$router->post('/book/search/{key}', 'BookController@Search');
+
 $router->get('/book/create', 'BookController@Create');
 $router->post('/book/create', 'BookController@Create');
 

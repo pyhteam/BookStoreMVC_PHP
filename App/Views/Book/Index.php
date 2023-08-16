@@ -7,6 +7,15 @@
                     <i class="fa fa-plus"></i>
                     Thêm Mới
                 </a>
+                <!-- Form Search -->
+                <form class="app-search d-none d-lg-block">
+                    <div class="position-relative">
+                        <input id="keySearch" type="text" class="form-control" placeholder="Search...">
+                        <button onclick="search()" class="btn btn-primary" type="button">
+                            <i class="bx bx-search-alt align-middle"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
@@ -28,7 +37,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="dataTable">
                         <?php foreach ($books as $item) : ?>
                             <tr>
                                 <td><?= $item->Id ?></td>
@@ -38,7 +47,7 @@
                                 <td><?= $item->CategoryName; ?></td>
                                 <td><?= $item->Price; ?></td>
                                 <td><?= $item->Quantity; ?></td>
-                                <td><?= $item->Image ? '<img src="'.$item->Image.'" width="60px" height="60px">' : 'No Image';?></td>
+                                <td><?= $item->Image ? '<img src="' . $item->Image . '" width="60px" height="60px">' : 'No Image'; ?></td>
                                 <td><?= $item->Slug; ?></td>
 
 
@@ -105,5 +114,52 @@
                 });
             }
         })
+    }
+
+    function search() {
+        var key = $('#keySearch').val();
+        $.ajax({
+            url: '/book/search/' + key,
+            method: 'POST',
+            contentType: 'application/json',
+            success: function(res) {
+                console.log(res);
+                if (res.success == true) {
+                    var html = '';
+                    res.data.forEach(element => {
+                        html +=`
+                        <tr>
+                            <td>${element.Id}</td>
+                            <td>${element.Title}</td>
+                            <td>${element.Author}</td>
+                            <td>${element.CategoryName}</td>
+                            <td>${element.Price}</td>
+                            <td>${element.Quantity}</td>
+                            <td>${element.Image ? '<img src="' + element.Image + '" width="60px" height="60px">' : 'No Image'}</td>
+                            <td>${element.Slug}</td>
+                            <td>${element.CreatedAt}</td>
+                            <td>${element.CreatedBy}</td>
+                            <td>${element.UpdatedAt}</td>
+                            <td>${element.UpdatedBy}</td>
+                            <td>${(element.IsActive == true) ? 'Active' : 'Inactive'}</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" href="/book/edit/${element.Id}">Edit</a>
+                                <button onclick="remove('${element.Id}')" type="button" class="btn btn-danger btn-sm">Delete</button>
+                            </td> 
+                        `
+                    });
+                    $('#dataTable').html(html);
+                    return;
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                Swal.fire(
+                    'Error!',
+                    'Something went wrong!',
+                    'error'
+                )
+            }
+        });
     }
 </script>
