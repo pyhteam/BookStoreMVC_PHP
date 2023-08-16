@@ -8,14 +8,14 @@
                     Thêm Mới
                 </a>
                 <!-- Form Search -->
-                <form class="app-search d-none d-lg-block">
+                <div class="app-search d-none d-lg-block">
                     <div class="position-relative">
-                        <input id="keySearch" type="text" class="form-control" placeholder="Search...">
+                        <input onkeyup="search()" id="keySearch" type="text" class="form-control" placeholder="Search...">
                         <button onclick="search()" class="btn btn-primary" type="button">
                             <i class="bx bx-search-alt align-middle"></i>
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
@@ -127,7 +127,7 @@
                 if (res.success == true) {
                     var html = '';
                     res.data.forEach(element => {
-                        html +=`
+                        html += `
                         <tr>
                             <td>${element.Id}</td>
                             <td>${element.Title}</td>
